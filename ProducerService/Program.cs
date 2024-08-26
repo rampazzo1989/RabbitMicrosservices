@@ -2,14 +2,15 @@
 using System;
 using System.Text;
 
-public class Producer
+namespace ProducerService
 {
-    public static void Main(string[] args)
+    public class Producer
     {
-        var factory = new ConnectionFactory() { HostName = "localhost" };
-        using (var connection = factory.CreateConnection())
-        using (var channel = connection.CreateModel())
+        public static void Main(string[] args)
         {
+            var factory = new ConnectionFactory() { HostName = "localhost" };
+            using var connection = factory.CreateConnection();
+            using var channel = connection.CreateModel();
             channel.QueueDeclare(queue: "hello", durable: false, exclusive: false, autoDelete: false, arguments: null);
 
             string message = "Hello RabbitMQ!";
